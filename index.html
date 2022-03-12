@@ -1,0 +1,42 @@
+<button id="pay-button">CHeckout</button>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  var options = {
+    key: "rzp_test_DwcpHHoAbyHrdn",
+    amount: "49900",
+    currency: "INR",
+    name: "Dummy Academy",
+    description: "Pay & Checkout this Course, Upgrade your DSA Skill",
+
+    order_id: "order_IuEELKT7Ng97Fe",
+    handler: function (response) {
+      console.log(response);
+      alert("This step of Payment Succeeded");
+    },
+    prefill: {
+      //Here we are prefilling random contact
+      contact: "9876543210",
+      //name and email id, so while checkout
+      name: "Twinkle Sharma",
+      email: "smtwinkle@gmail.com",
+    },
+    notes: {
+      description: "Best Course for SDE placements",
+    },
+    theme: {
+      color: "#2300a3",
+    },
+  };
+  var razorpayObject = new Razorpay(options);
+  console.log(razorpayObject);
+  razorpayObject.on("payment.failed", function (response) {
+    console.log(response);
+    alert("This step of Payment Failed");
+  });
+
+  document.getElementById("pay-button").onclick = function (e) {
+    razorpayObject.open();
+    e.preventDefault();
+  };
+</script>
